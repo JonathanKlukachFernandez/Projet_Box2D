@@ -1,9 +1,12 @@
 #include <iostream>
+#include "SFML/Graphics.hpp"
+#include "box2d/box2d.h"
+
 
 int main()
 {
 
-	sb2Vec2 gravity(0.0f, -10.0f);
+	b2Vec2 gravity(0.0f, -10.0f);
 
 	b2World world(gravity);
 
