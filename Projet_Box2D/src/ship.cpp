@@ -116,7 +116,6 @@ void Ship::ApplyLocalForceWithCheck(float forceValue) {
     }
 
 }
-
 void Ship::rotateLeft(float torque) {
     ApplyTorqueWithCheck(-1.0f * torque);
 }
