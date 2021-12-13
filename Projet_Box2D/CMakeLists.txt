@@ -36,7 +36,7 @@ include_directories(include/)
 
 file(GLOB_RECURSE PLATFORMER_SRC src/*.cpp include/*.h)
 
-add_executable(${EXECUTABLE_CUSTOM_NAME} ${PLATFORMER_SRC})
+add_executable(${EXECUTABLE_CUSTOM_NAME} ${PLATFORMER_SRC})  
 add_dependencies(${EXECUTABLE_CUSTOM_NAME} DataTarget-${EXECUTABLE_CUSTOM_NAME})
 target_link_libraries(${EXECUTABLE_CUSTOM_NAME} PRIVATE sfml-graphics sfml-audio sfml-window sfml-system)
 
