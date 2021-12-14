@@ -1,6 +1,6 @@
-
+/*
 #include "game.h"
-#include "ship.h"
+#include "enemyShip.h"
 
 #include "SFML_Utilities.h"
 #include <iostream>
@@ -8,15 +8,14 @@
 #include "textureManager.h"
 #include "userData.h"
 
-Ship::Ship(Game& game_) : m_game(game_)
+enemyShip::enemyShip(Game& game_) : m_game(game_)
 {
 }
-
-float Ship::getLife() {
+float enemyShip::getLife() {
     return m_life;
 }
 
-void Ship::setDamages(float damages_)
+void enemyShip::setDamages(float damages_)
 {
     m_life -= damages_;
 }
@@ -28,7 +27,7 @@ void Ship::init(sf::Vector2u winsize) {
     TextureManager* texManager = TextureManager::Instance();
     m_sprite.setTexture(texManager->getShipTexture());
     m_sprite.setOrigin(texManager->getShipTexture().getSize().x * 0.5f, texManager->getShipTexture().getSize().y * 0.5f);
-    
+
     // Defing the box 2D elements
     b2BodyDef bodyDef;
     bodyDef.fixedRotation = false;
@@ -38,14 +37,14 @@ void Ship::init(sf::Vector2u winsize) {
     bodyDef.angularDamping = 0.75f;
     bodyDef.linearDamping = 0.75f;
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(m_userData);
-    
+
     m_body = this->m_game.getWorld().CreateBody(&bodyDef);
     //m_body->SetUserData(reinterpret_cast<void*>(&m_userData));
 
     // Shape of the physical (A box)
     b2PolygonShape hitBox;
     hitBox.SetAsBox(
-        0.5f * pixelsToMeters(texManager->getShipTexture().getSize().x), 
+        0.5f * pixelsToMeters(texManager->getShipTexture().getSize().x),
         0.5f * pixelsToMeters(texManager->getShipTexture().getSize().y)
     );
 
@@ -56,7 +55,7 @@ void Ship::init(sf::Vector2u winsize) {
     playerFixtureDef.friction = 0.0f;
     playerFixtureDef.restitution = 0.6f; // Make it bounce a little bit
     //playerFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&m_userData);
-	m_body->CreateFixture(&playerFixtureDef);
+    m_body->CreateFixture(&playerFixtureDef);
 
 }
 
@@ -137,4 +136,4 @@ void Ship::ApplyTorqueWithCheck(float torque) {
     }
 
 }
-
+*/

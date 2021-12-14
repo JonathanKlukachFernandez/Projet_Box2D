@@ -1,3 +1,4 @@
+/*
 #pragma once
 
 #include "userData.h"
@@ -44,4 +45,4 @@ private:
 
 	float m_life = 100.0f;
 
-};
+};*/

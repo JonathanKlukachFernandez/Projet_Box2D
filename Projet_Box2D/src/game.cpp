@@ -114,18 +114,18 @@ void Game::loop()
 		}
 
 
-		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
 			m_ship.speedUp(1.0f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
 			m_ship.speedDown(1.0f);
-		}*/
+		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-			m_ship.rotateLeft(1.0f);
+			m_ship.speedLeft(1.0f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-			m_ship.rotateRight(1.0f);
+			m_ship.speedRight(1.0f);
 		}
 
 
