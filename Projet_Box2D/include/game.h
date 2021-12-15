@@ -23,7 +23,6 @@ public:
 
 	void setDamagesToShip(float damages_);
 	void setDamagesToEnemyShip(float damages_);
-	//void putAsteroidToDeath(int idAsteroid_);
 	void putMissileToDeath(int idMissile_);
 
 

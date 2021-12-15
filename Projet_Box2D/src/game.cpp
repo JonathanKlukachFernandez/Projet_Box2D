@@ -25,6 +25,7 @@ void Game::init() {
 	m_window.setFramerateLimit(60.0f);
 
 	m_ship.init(m_window.getSize());
+	// Set position of the ship
 	m_ship.move(sf::Vector2f(0.5f * m_window.getSize().x, 0.75f * m_window.getSize().y), sf::Vector2f(0, 0));
 
 	m_enemyShip.init(m_window.getSize());
@@ -34,22 +35,6 @@ void Game::init() {
 	m_gameOverTitle.setPosition(0.5f * m_window.getSize().x, 0.5f * m_window.getSize().y);
 
 	// Add a bouncer
-	// TOP LIMIT -------------------------------------------
-	m_windowLimits.push_back(
-		Bouncer(
-			*this,
-			sf::Vector2f(0.5f * m_window.getSize().x, 0.0f),
-			sf::Vector2f(m_window.getSize().x, 10.0f)
-		)
-	);
-	// BOTTOM LIMIT -------------------------------------------
-	m_windowLimits.push_back(
-		Bouncer(
-			*this,
-			sf::Vector2f(0.5f * m_window.getSize().x, m_window.getSize().y),
-			sf::Vector2f(m_window.getSize().x, 10.0f)
-		)
-	);
 	// LEFT LIMIT -------------------------------------------
 	m_windowLimits.push_back(
 		Bouncer(
@@ -115,14 +100,6 @@ void Game::loop()
 
 			}
 		}
-
-
-		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
-			m_ship.speedUp(1.0f);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-			m_ship.speedDown(1.0f);
-		}*/
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
 			m_ship.speedLeft(1.0f);
