@@ -25,7 +25,7 @@ void Game::init() {
 	m_window.setFramerateLimit(60.0f);
 
 	m_ship.init(m_window.getSize());
-	m_ship.move(sf::Vector2f(0.5f * m_window.getSize().x, 0.9f * m_window.getSize().y), sf::Vector2f(0, 0));
+	m_ship.move(sf::Vector2f(0.5f * m_window.getSize().x, 0.75f * m_window.getSize().y), sf::Vector2f(0, 0));
 
 	m_enemyShip.init(m_window.getSize());
 
@@ -34,7 +34,7 @@ void Game::init() {
 	m_gameOverTitle.setPosition(0.5f * m_window.getSize().x, 0.5f * m_window.getSize().y);
 
 	// Add a bouncer
-// TOP LIMIT -------------------------------------------
+	// TOP LIMIT -------------------------------------------
 	m_windowLimits.push_back(
 		Bouncer(
 			*this,

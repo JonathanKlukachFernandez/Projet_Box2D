@@ -34,7 +34,6 @@ void Ship::init(sf::Vector2u winsize) {
     bodyDef.fixedRotation = true;
     bodyDef.type = b2_dynamicBody;
     b2Vec2 windowSize = pixelsToMeters(winsize);
-    bodyDef.position.Set(windowSize.x / 4.0f, windowSize.y / 120.0f);
     bodyDef.linearDamping = 0.75f;
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(m_userData);
     
@@ -74,7 +73,7 @@ void Ship::update() {
     setPosition(graphicPosition);
 
     float angle = m_body->GetAngle();
-    //setRotation(radToDeg(angle));
+    setRotation(radToDeg(angle));
 
 }
 
@@ -108,14 +107,14 @@ void Ship::ApplyLocalForceWithCheck(float forceValue) {
 
 }
 void Ship::speedLeft(float forceValue) {
-    ApplyTorqueWithCheck(-1.0f * forceValue);
+    m_body->ApplyForceToCenter(b2Vec2 (-5.0f * forceValue, 0), true);
 }
 
 void Ship::speedRight(float forceValue) {
-    ApplyTorqueWithCheck(1.0f * forceValue);
+    ApplyTorqueWithCheck(5.0f * forceValue);
 }
 
-/*void Ship::ApplyTorqueWithCheck(float torque) {
+void Ship::ApplyTorqueWithCheck(float torque) {
 
     if (b2Abs(m_body->GetAngularVelocity()) < 0.5f) {
 
@@ -125,7 +124,8 @@ void Ship::speedRight(float forceValue) {
             m_body->SetAngularVelocity(0.0f);
         }
 
-    }*/
+    }
 
 
+}
 
