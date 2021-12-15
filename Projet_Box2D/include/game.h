@@ -8,6 +8,7 @@
 #include "lifeBar.h"
 #include "missileManager.h"
 #include "ship.h"
+#include "enemyShip.h"
 
 class Game {
 
@@ -18,9 +19,11 @@ public:
 
 	b2World& getWorld() { return m_world; };
 	Ship& getShip() { return m_ship; };
+	EnemyShip& getEnemyShip() { return m_enemyShip; };
 
 	void setDamagesToShip(float damages_);
-	void putAsteroidToDeath(int idAsteroid_);
+	void setDamagesToEnemyShip(float damages_);
+	//void putAsteroidToDeath(int idAsteroid_);
 	void putMissileToDeath(int idMissile_);
 
 
@@ -41,6 +44,7 @@ private:
 
 	// The game entities --------------------------------------
 	Ship m_ship;
+	EnemyShip m_enemyShip;
 	MissileManager m_missileManager;
 
 	// The ui entities

@@ -10,6 +10,7 @@ Game::Game() :
 	m_gravity(0.0f, 0.0f),
 	m_world(m_gravity),
 	m_ship(*this),
+	m_enemyShip(*this),
 	m_missileManager(m_world)
 	
 {
@@ -19,12 +20,14 @@ void Game::init() {
 
 	TextureManager* texture_manager = TextureManager::Instance();
 
-	m_window.create(sf::VideoMode(1280, 720), "");
+	m_window.create(sf::VideoMode(720, 1080), "");
 	m_window.setVerticalSyncEnabled(true);
 	m_window.setFramerateLimit(60.0f);
 
 	m_ship.init(m_window.getSize());
 	m_ship.move(sf::Vector2f(0.5f * m_window.getSize().x, 0.9f * m_window.getSize().y), sf::Vector2f(0, 0));
+
+	m_enemyShip.init(m_window.getSize());
 
 	m_gameOverTitle.setTexture(texture_manager->getGameOverTexture());
 	m_gameOverTitle.setOrigin(0.5f * texture_manager->getGameOverTexture().getSize().x, 0.5f * texture_manager->getGameOverTexture().getSize().y);
@@ -114,12 +117,12 @@ void Game::loop()
 		}
 
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
 			m_ship.speedUp(1.0f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
 			m_ship.speedDown(1.0f);
-		}
+		}*/
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
 			m_ship.speedLeft(1.0f);
@@ -154,8 +157,9 @@ void Game::update()
 	int32 positionIterations = 2;
 	m_world.Step(timeStep, velocityIterations, positionIterations);
 
-	// Update the ship
+	// Update the ships
 	m_ship.update();
+	m_enemyShip.update();
 	// Update Life bars with the life of the ship
 	m_lifeBar.setLife(m_ship.getLife());
 	m_lifeBar.update();
@@ -165,6 +169,7 @@ void Game::update()
 		m_gameOver = true;
 		return;
 	}
+
 
 	// Udpate stuff
 	m_missileManager.update();
@@ -202,6 +207,10 @@ void Game::draw()
 	if(!m_gameOver)
 		m_window.draw(m_ship);
 
+	// Draw the enemy ship
+	if (!m_gameOver)
+		m_window.draw(m_enemyShip);
+
 	// Draw stuff
 	m_window.draw(m_missileManager);
 
@@ -227,6 +236,10 @@ void Game::setDamagesToShip(float damages_)
 	m_ship.setDamages(damages_);
 }
 
+void Game::setDamagesToEnemyShip(float damages_)
+{
+	m_enemyShip.setDamages(damages_);
+}
 
 void Game::putMissileToDeath(int idMissile_)
 {

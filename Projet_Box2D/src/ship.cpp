@@ -31,11 +31,10 @@ void Ship::init(sf::Vector2u winsize) {
     
     // Defing the box 2D elements
     b2BodyDef bodyDef;
-    bodyDef.fixedRotation = false;
+    bodyDef.fixedRotation = true;
     bodyDef.type = b2_dynamicBody;
     b2Vec2 windowSize = pixelsToMeters(winsize);
-    bodyDef.position.Set(windowSize.x / 2.0f, windowSize.y / 2.0f);
-    bodyDef.angularDamping = 0.75f;
+    bodyDef.position.Set(windowSize.x / 4.0f, windowSize.y / 120.0f);
     bodyDef.linearDamping = 0.75f;
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(m_userData);
     
@@ -94,14 +93,6 @@ void Ship::move(sf::Vector2f _pixelsPosition, sf::Vector2f _velocity) {
 
 }
 
-void Ship::speedUp(float forceValue) {
-    ApplyLocalForceWithCheck(1.0f * forceValue);
-}
-
-void Ship::speedDown(float forceValue) {
-    ApplyLocalForceWithCheck(-1.0f * forceValue);
-}
-
 void Ship::ApplyLocalForceWithCheck(float forceValue) {
 
     b2Vec2 force(0.0, forceValue);
@@ -124,7 +115,7 @@ void Ship::speedRight(float forceValue) {
     ApplyTorqueWithCheck(1.0f * forceValue);
 }
 
-void Ship::ApplyTorqueWithCheck(float torque) {
+/*void Ship::ApplyTorqueWithCheck(float torque) {
 
     if (b2Abs(m_body->GetAngularVelocity()) < 0.5f) {
 
@@ -134,7 +125,7 @@ void Ship::ApplyTorqueWithCheck(float torque) {
             m_body->SetAngularVelocity(0.0f);
         }
 
-    }
+    }*/
 
-}
+
 

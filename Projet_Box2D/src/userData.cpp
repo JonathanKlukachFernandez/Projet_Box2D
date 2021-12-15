@@ -36,11 +36,11 @@ const std::string UserData::UserDataTypeToString(UserDataType type_)
 	case UserDataType::LIMIT:
 		return "LIMIT";
 		break;
-	case UserDataType::ASTEROID:
-		return "ASTEROID";
-		break;
 	case UserDataType::MISSILE:
 		return "MISSILE";
+		break;
+	case UserDataType::ENEMYSHIP:
+		return"ENEMYSHIP";
 		break;
 	case UserDataType::NONE:
 	default:

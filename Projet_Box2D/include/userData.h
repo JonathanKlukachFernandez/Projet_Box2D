@@ -8,6 +8,7 @@ enum UserDataType : char
     LIMIT = 'l',
     ASTEROID = 'a',
     MISSILE = 'n',
+    ENEMYSHIP = 'e',
     NONE
 
 };

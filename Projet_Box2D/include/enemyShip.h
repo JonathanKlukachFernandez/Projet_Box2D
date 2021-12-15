@@ -1,4 +1,4 @@
-/*
+
 #pragma once
 
 #include "userData.h"
@@ -7,12 +7,12 @@
 
 class Game;
 
-class Ship : public sf::Drawable, public sf::Transformable {
+class EnemyShip : public sf::Drawable, public sf::Transformable {
 
 public:
 
-	explicit Ship(Game& game_);
-	~Ship() {};
+	explicit EnemyShip(Game& game_);
+	~EnemyShip() {};
 
 	void init(sf::Vector2u winsize);
 	void update();
@@ -25,7 +25,7 @@ public:
 
 	void speedLeft(float force);
 	void speedRight(float force);
-	void ApplyTorqueWithCheck(float torque);
+	void ApplyTorqueWithCheck(float force);
 
 	// DRAWABLE OVERRIDES
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -41,8 +41,8 @@ private:
 	sf::Sprite m_sprite;
 
 	b2Body* m_body = nullptr;
-	UserData* m_userData = new UserData(UserDataType::SHIP);
+	UserData* m_userData = new UserData(UserDataType::ENEMYSHIP);
 
 	float m_life = 100.0f;
 
-};*/
+};

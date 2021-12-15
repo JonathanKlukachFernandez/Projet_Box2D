@@ -1,4 +1,3 @@
-/*
 #include "game.h"
 #include "enemyShip.h"
 
@@ -8,35 +7,38 @@
 #include "textureManager.h"
 #include "userData.h"
 
-enemyShip::enemyShip(Game& game_) : m_game(game_)
+EnemyShip::EnemyShip(Game& game_) : m_game(game_)
 {
 }
-float enemyShip::getLife() {
+float EnemyShip::getLife() {
     return m_life;
 }
 
-void enemyShip::setDamages(float damages_)
+void EnemyShip::setDamages(float damages_)
 {
     m_life -= damages_;
 }
 
 
-void Ship::init(sf::Vector2u winsize) {
+void EnemyShip::init(sf::Vector2u winsize) {
 
     // Defining the shape
     TextureManager* texManager = TextureManager::Instance();
-    m_sprite.setTexture(texManager->getShipTexture());
-    m_sprite.setOrigin(texManager->getShipTexture().getSize().x * 0.5f, texManager->getShipTexture().getSize().y * 0.5f);
+    m_sprite.setTexture(texManager->getEnemyShipTexture());
+    m_sprite.setOrigin(texManager->getEnemyShipTexture().getSize().x * 0.5f, texManager->getEnemyShipTexture().getSize().y * 0.5f);
 
-    // Defing the box 2D elements
+    // Defining the box 2D elements
     b2BodyDef bodyDef;
-    bodyDef.fixedRotation = false;
+    bodyDef.fixedRotation = true;
     bodyDef.type = b2_dynamicBody;
     b2Vec2 windowSize = pixelsToMeters(winsize);
-    bodyDef.position.Set(windowSize.x / 2.0f, windowSize.y / 2.0f);
+    bodyDef.position.Set(windowSize.x / 2.0f, windowSize.y / 4.0f);
     bodyDef.angularDamping = 0.75f;
     bodyDef.linearDamping = 0.75f;
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(m_userData);
+    // Defining body angle
+    bodyDef.angle = degToRad(180); // the body's angle in radians.
+
 
     m_body = this->m_game.getWorld().CreateBody(&bodyDef);
     //m_body->SetUserData(reinterpret_cast<void*>(&m_userData));
@@ -44,8 +46,8 @@ void Ship::init(sf::Vector2u winsize) {
     // Shape of the physical (A box)
     b2PolygonShape hitBox;
     hitBox.SetAsBox(
-        0.5f * pixelsToMeters(texManager->getShipTexture().getSize().x),
-        0.5f * pixelsToMeters(texManager->getShipTexture().getSize().y)
+        0.5f * pixelsToMeters(texManager->getEnemyShipTexture().getSize().x),
+        0.5f * pixelsToMeters(texManager->getEnemyShipTexture().getSize().y)
     );
 
     // The fixture is what it defines the physic react
@@ -59,7 +61,7 @@ void Ship::init(sf::Vector2u winsize) {
 
 }
 
-void Ship::update() {
+void EnemyShip::update() {
 
     // Set speed -------------------------------------------------------------------
     //body->SetLinearVelocity(linVelocity);
@@ -74,17 +76,17 @@ void Ship::update() {
     setPosition(graphicPosition);
 
     float angle = m_body->GetAngle();
-    //setRotation(radToDeg(angle));
+    setRotation(radToDeg(-1.0f * angle));
 
 }
 
-void Ship::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void EnemyShip::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
     target.draw(m_sprite, states);
 }
 
-void Ship::move(sf::Vector2f _pixelsPosition, sf::Vector2f _velocity) {
+void EnemyShip::move(sf::Vector2f _pixelsPosition, sf::Vector2f _velocity) {
 
     b2Vec2 pos = pixelsToMeters(_pixelsPosition);
     b2Vec2 vel = pixelsToMeters(_velocity);
@@ -93,15 +95,15 @@ void Ship::move(sf::Vector2f _pixelsPosition, sf::Vector2f _velocity) {
 
 }
 
-void Ship::speedUp(float forceValue) {
+/*void EnemyShip::speedUp(float forceValue) {
     ApplyLocalForceWithCheck(1.0f * forceValue);
 }
 
-void Ship::speedDown(float forceValue) {
+void EnemyShip::speedDown(float forceValue) {
     ApplyLocalForceWithCheck(-1.0f * forceValue);
 }
 
-void Ship::ApplyLocalForceWithCheck(float forceValue) {
+void EnemyShip::ApplyLocalForceWithCheck(float forceValue) {
 
     b2Vec2 force(0.0, forceValue);
     b2Vec2 localForce = m_body->GetLocalVector(force);
@@ -115,15 +117,15 @@ void Ship::ApplyLocalForceWithCheck(float forceValue) {
     }
 
 }
-void Ship::speedLeft(float forceValue) {
+void EnemyShip::speedLeft(float forceValue) {
     ApplyTorqueWithCheck(-1.0f * forceValue);
 }
 
-void Ship::speedRight(float forceValue) {
+void EnemyShip::speedRight(float forceValue) {
     ApplyTorqueWithCheck(1.0f * forceValue);
 }
 
-void Ship::ApplyTorqueWithCheck(float torque) {
+void EnemyShip::ApplyTorqueWithCheck(float torque) {
 
     if (b2Abs(m_body->GetAngularVelocity()) < 0.5f) {
 
@@ -133,7 +135,6 @@ void Ship::ApplyTorqueWithCheck(float torque) {
             m_body->SetAngularVelocity(0.0f);
         }
 
-    }
+    }*/
 
-}
-*/
+

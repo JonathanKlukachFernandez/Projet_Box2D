@@ -23,10 +23,10 @@ protected:
 
     static TextureManager* textureManager_;
 
-    sf::Texture m_asteroidTexture;
     sf::Texture m_shipTexture;
     sf::Texture m_gameOverTexture;
     sf::Texture m_missileTexture;
+    sf::Texture m_enemyShipTexture;
 
 public:
 
@@ -49,10 +49,10 @@ public:
 
 
     // --------------------
-    sf::Texture& getAsteroidTexture();
     sf::Texture& getShipTexture();
     sf::Texture& getGameOverTexture();
     sf::Texture& getMissileTexture();
+    sf::Texture& getEnemyShipTexture();
 
 
 };

@@ -4,9 +4,10 @@ TextureManager* TextureManager::textureManager_ = nullptr;
 
 TextureManager::TextureManager()
 {
-    m_shipTexture.loadFromFile("./data/Ship.png");
+    m_shipTexture.loadFromFile("./data/modular_ships_2.png");
     m_gameOverTexture.loadFromFile("./data/GameOver.png");
     m_missileTexture.loadFromFile("./data/missile.png");
+    m_enemyShipTexture.loadFromFile("./data/Ship.png");
 }
 
 
@@ -25,10 +26,8 @@ TextureManager* TextureManager::Instance()
     return textureManager_;
 }
 
-sf::Texture& TextureManager::getAsteroidTexture() {
-    return m_asteroidTexture;
-}
-sf::Texture& TextureManager::getShipTexture() {
+sf::Texture& TextureManager::getShipTexture()
+{
     return m_shipTexture;
 }
 sf::Texture& TextureManager::getGameOverTexture()
@@ -38,4 +37,9 @@ sf::Texture& TextureManager::getGameOverTexture()
 sf::Texture& TextureManager::getMissileTexture()
 {
     return m_missileTexture;
+}
+
+sf::Texture& TextureManager::getEnemyShipTexture()
+{
+    return m_enemyShipTexture;
 }
