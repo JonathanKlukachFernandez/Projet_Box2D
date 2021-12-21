@@ -10,13 +10,13 @@
 EnemyShip::EnemyShip(Game& game_) : m_game(game_)
 {
 }
-float EnemyShip::getLife() {
-    return m_life;
+float EnemyShip::getEnemyLife() {
+    return m_enemyLife;
 }
 
 void EnemyShip::setDamages(float damages_)
 {
-    m_life -= damages_;
+    m_enemyLife -= damages_;
 }
 
 
@@ -55,8 +55,7 @@ void EnemyShip::init(sf::Vector2u winsize) {
     playerFixtureDef.shape = &hitBox;
     playerFixtureDef.density = 1.0f;
     playerFixtureDef.friction = 0.0f;
-    playerFixtureDef.restitution = 0.6f; // Make it bounce a little bit
-    //playerFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&m_userData);
+    playerFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&m_userData);
     m_body->CreateFixture(&playerFixtureDef);
 
 }

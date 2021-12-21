@@ -12,7 +12,7 @@ class EnemyShip : public sf::Drawable, public sf::Transformable {
 public:
 
 	explicit EnemyShip(Game& game_);
-	~EnemyShip() {};
+	~EnemyShip() {}
 
 	void init(sf::Vector2u winsize);
 	void update();
@@ -31,9 +31,9 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	// getters
-	float getLife();
+	float getEnemyLife();
 	void setDamages(float damages_);
-	constexpr float lifeMax() { return 100.0f; };
+	constexpr float enemyLifeMax() { return 100.0f; };
 
 private:
 	Game& m_game;
@@ -43,6 +43,6 @@ private:
 	b2Body* m_body = nullptr;
 	UserData* m_userData = new UserData(UserDataType::ENEMYSHIP);
 
-	float m_life = 100.0f;
+	float m_enemyLife = 100.0f;
 
 };

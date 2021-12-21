@@ -39,16 +39,16 @@ void Game::init() {
 	m_windowLimits.push_back(
 		Bouncer(
 			*this,
-			sf::Vector2f(0.0f, 0.5f * m_window.getSize().y),
-			sf::Vector2f(10.0F, m_window.getSize().y)
+			sf::Vector2f(0.0f, 0.0f * m_window.getSize().y),
+			sf::Vector2f(0.0F, m_window.getSize().y)
 		)
 	);
 	// RIGHT LIMIT -------------------------------------------
 	m_windowLimits.push_back(
 		Bouncer(
 			*this,
-			sf::Vector2f(m_window.getSize().x, 0.5f * m_window.getSize().y),
-			sf::Vector2f(10.0f, m_window.getSize().y)
+			sf::Vector2f(m_window.getSize().x, 0.0f * m_window.getSize().y),
+			sf::Vector2f(0.0f, m_window.getSize().y)
 		)
 	);
 
@@ -137,12 +137,22 @@ void Game::update()
 	// Update the ships
 	m_ship.update();
 	m_enemyShip.update();
-	// Update Life bars with the life of the ship
+	// Update Life bar with the life of the ship
 	m_lifeBar.setLife(m_ship.getLife());
 	m_lifeBar.update();
 	if (m_ship.getLife() <= 0)
 	{
 		// LOOOOSSSEEEEERRRRRRRRRR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		m_gameOver = true;
+		return;
+	}
+
+	// Update Life bar with the life of the enemy ship
+	m_enemyLifeBar.setEnemyLife(m_enemyShip.getEnemyLife());
+	m_enemyLifeBar.update();
+	if (m_enemyShip.getEnemyLife() <= 0)
+	{
+		// You win !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		m_gameOver = true;
 		return;
 	}
@@ -198,8 +208,9 @@ void Game::draw()
 			m_window.draw(b);
 		}
 	}
-	// Draw Life bar
+	// Draw the Life bars
 	m_window.draw(m_lifeBar);
+	m_window.draw(m_enemyLifeBar);
 
 	if(m_gameOver)
 		m_window.draw(m_gameOverTitle);

@@ -37,9 +37,9 @@ void Bouncer::init(sf::Vector2f pos_, sf::Vector2f size_) {
     // The fixture is what it defines the physic react
     b2FixtureDef playerFixtureDef;
     playerFixtureDef.shape = &bouncerBox;
-    playerFixtureDef.density = 1.0f;
-    playerFixtureDef.friction = 0.2f;
-    playerFixtureDef.restitution = 0.01f; // Make it bounce a little bit
+    playerFixtureDef.density = 0.01f;
+    playerFixtureDef.friction = 0.01f;
+    playerFixtureDef.restitution = 0.0001f; // Make it bounce a little bit
 
     m_body->CreateFixture(&playerFixtureDef);
 

@@ -107,11 +107,11 @@ void Ship::ApplyLocalForceWithCheck(float forceValue) {
 
 }
 void Ship::speedLeft(float forceValue) {
-    m_body->ApplyForceToCenter(b2Vec2(-5.0f * forceValue, 0), true);
+    m_body->ApplyForceToCenter(b2Vec2(-2.0f * forceValue, 0), true);
 }
 
 void Ship::speedRight(float forceValue) {
-    m_body->ApplyForceToCenter(b2Vec2(5.0f * forceValue, 0), true);
+    m_body->ApplyForceToCenter(b2Vec2(2.0f * forceValue, 0), true);
 }
 
 void Ship::ApplyTorqueWithCheck(float torque) {

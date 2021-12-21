@@ -6,6 +6,7 @@
 #include "box2d/b2_world.h"
 #include "bouncer.h"
 #include "lifeBar.h"
+#include "enemyLifeBar.h"
 #include "missileManager.h"
 #include "ship.h"
 #include "enemyShip.h"
@@ -24,6 +25,7 @@ public:
 	void setDamagesToShip(float damages_);
 	void setDamagesToEnemyShip(float damages_);
 	void putMissileToDeath(int idMissile_);
+	//void putEnemyShipToDeath(int idEnemyShip_);
 
 
 private:
@@ -38,8 +40,6 @@ private:
 	b2Vec2 m_gravity;
 	b2World m_world;
 	std::vector<Bouncer> m_windowLimits;
-	
-
 
 	// The game entities --------------------------------------
 	Ship m_ship;
@@ -48,6 +48,7 @@ private:
 
 	// The ui entities
 	LifeBar m_lifeBar = LifeBar(100.0f);
+	EnemyLifeBar m_enemyLifeBar = EnemyLifeBar(100.0f);
 	sf::Sprite m_gameOverTitle;
 
 	sf::Clock clock;

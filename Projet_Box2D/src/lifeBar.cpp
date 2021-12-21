@@ -14,7 +14,7 @@ LifeBar::LifeBar(float lifeMax)
 	m_lifeBarContour.setPosition(sf::Vector2f(10, 25));
 	m_lifeBarContour.setOrigin(0, m_lifeBarContour.getSize().y * 0.5f);
 	m_lifeBarContour.setFillColor(sf::Color::Black);
-	m_lifeBarContour.setOutlineColor(sf::Color::White);
+	m_lifeBarContour.setOutlineColor(sf::Color::Green);
 	m_lifeBarContour.setOutlineThickness(2);
 
 	m_lifeMax = lifeMax;
