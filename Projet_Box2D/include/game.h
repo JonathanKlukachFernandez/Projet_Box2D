@@ -10,10 +10,18 @@
 #include "missileManager.h"
 #include "ship.h"
 #include "enemyShip.h"
+#include "contact_listener.h"
+
+
+
+
+
 
 class Game {
 
 public:
+	static constexpr float TIME_TO_SHOOT = 1.5f;
+
 	Game();
 	void init();
 	void loop();
@@ -29,6 +37,9 @@ public:
 
 
 private:
+	float m_shootTimer;
+
+	MyContactListener m_contact_listener_;
 
 	bool m_debugMode;
 	bool m_gameOver = false;
@@ -40,6 +51,8 @@ private:
 	b2Vec2 m_gravity;
 	b2World m_world;
 	std::vector<Bouncer> m_windowLimits;
+	MyContactListener m_contacts;
+
 
 	// The game entities --------------------------------------
 	Ship m_ship;

@@ -22,7 +22,7 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void update();
 
-	void AddMissile(Ship& ship_);
+	void AddMissile(sf::Vector2f startPos, float angle);
 	void putMissileToDeath(int idMissile_);
 
 };

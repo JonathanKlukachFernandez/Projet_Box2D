@@ -6,21 +6,25 @@
 
 #include "textureManager.h"
 
-Game::Game() : 
+Game::Game() :
 	m_gravity(0.0f, 0.0f),
 	m_world(m_gravity),
 	m_ship(*this),
 	m_enemyShip(*this),
-	m_missileManager(m_world)
-	
+	m_contacts(*this),
+	m_contact_listener_(*this),
+	m_missileManager(m_world),
+	m_shootTimer(Game::TIME_TO_SHOOT)
 {
 }
 
 void Game::init() {
 
+	m_world.SetContactListener(&m_contact_listener_);
+
 	TextureManager* texture_manager = TextureManager::Instance();
 
-	m_window.create(sf::VideoMode(720, 1080), "");
+	m_window.create(sf::VideoMode(720, 1080), "Vertical space shooter");
 	m_window.setVerticalSyncEnabled(true);
 	m_window.setFramerateLimit(60.0f);
 
@@ -55,12 +59,14 @@ void Game::init() {
 	m_debugMode = false;
 
 	// Register contacts
-	
+	m_world.SetContactListener(&m_contacts);
 
 }
 
 void Game::loop()
 {
+
+
 	while (m_window.isOpen())
 	{
 #pragma region Event processes
@@ -87,7 +93,8 @@ void Game::loop()
 			}
 
 			// Keyboard event
-			if(event.type == sf::Event::KeyReleased)
+
+			if (event.type == sf::Event::KeyReleased)
 			{
 				if (event.key.code == sf::Keyboard::Key::D)
 				{
@@ -95,7 +102,8 @@ void Game::loop()
 				}
 				if (event.key.code == sf::Keyboard::Key::Space)
 				{
-					m_missileManager.AddMissile(m_ship);
+					const sf::Vector2f shipPosition(m_ship.getPosition());
+					m_missileManager.AddMissile(sf::Vector2f(shipPosition.x, shipPosition.y - 50), m_ship.getRotation());
 				}
 
 			}
@@ -113,7 +121,7 @@ void Game::loop()
 
 
 #pragma region Physical process
-		if(!m_gameOver)
+		if (!m_gameOver)
 			update();
 
 #pragma endregion
@@ -129,10 +137,22 @@ void Game::loop()
 void Game::update()
 {
 	// Updating the world with a delay
-	float timeStep = 1.0f / 60.0f;
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
+	const float timeStep = 1.0f / 60.0f;
+	const int32 velocityIterations = 6;
+	const int32 positionIterations = 2;
 	m_world.Step(timeStep, velocityIterations, positionIterations);
+
+	// Tick every 1.0sec
+	const sf::Time elapsed = clock.restart();
+	collectedElapsed += elapsed;
+	m_shootTimer -= elapsed.asSeconds();
+	if (m_shootTimer <= 0)
+	{
+		m_shootTimer += TIME_TO_SHOOT;
+		const auto pos = m_enemyShip.getPosition();
+		this->m_missileManager.AddMissile(sf::Vector2f(pos.x, pos.y + 75), m_enemyShip.getRotation());
+	}
+	m_enemyShip.UpdateTimer(elapsed);
 
 	// Update the ships
 	m_ship.update();
@@ -140,12 +160,13 @@ void Game::update()
 	// Update Life bar with the life of the ship
 	m_lifeBar.setLife(m_ship.getLife());
 	m_lifeBar.update();
-	if (m_ship.getLife() <= 0)
+	if(m_ship.getLife() <= 0)
 	{
-		// LOOOOSSSEEEEERRRRRRRRRR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// Game over
 		m_gameOver = true;
 		return;
 	}
+
 
 	// Update Life bar with the life of the enemy ship
 	m_enemyLifeBar.setEnemyLife(m_enemyShip.getEnemyLife());
@@ -165,17 +186,14 @@ void Game::update()
 		b.update();
 	}
 
-	// Tick every 1.0sec
-	sf::Time elapsed = clock.restart();
-	collectedElapsed += elapsed;
 
 	if (collectedElapsed.asSeconds() > 1.0f) {
 
 		std::random_device rd; // obtain a random number from hardware
 		std::mt19937 generator(rd()); // seed the generator
 		std::uniform_int_distribution<> rndAngle(0, 360); // define the range
-		std::uniform_int_distribution<> rndX(0, m_window.getSize().x); // define the range
-		std::uniform_int_distribution<> rndY(0, m_window.getSize().y); // define the range
+		const std::uniform_int_distribution<> rndX(0, m_window.getSize().x); // define the range
+		const std::uniform_int_distribution<> rndY(0, m_window.getSize().y); // define the range
 
 		sf::Vector2f rdnPos(rndX(generator), rndY(generator));
 
@@ -191,7 +209,7 @@ void Game::draw()
 
 	// DRWA THINGS ----------------------------------------------------------
 	// Draw the ship
-	if(!m_gameOver)
+	if (!m_gameOver)
 		m_window.draw(m_ship);
 
 	// Draw the enemy ship
@@ -212,7 +230,7 @@ void Game::draw()
 	m_window.draw(m_lifeBar);
 	m_window.draw(m_enemyLifeBar);
 
-	if(m_gameOver)
+	if (m_gameOver)
 		m_window.draw(m_gameOverTitle);
 
 	// Display all elements

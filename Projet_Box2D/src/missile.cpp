@@ -58,15 +58,15 @@ void Missile::update()
 {
 
     // Get the position of the body
-    b2Vec2 bodyPos = m_body->GetPosition();
+    const b2Vec2 bodyPos = m_body->GetPosition();
 
     // Translate meters to pixels
-    sf::Vector2f graphicPosition = metersToPixels(bodyPos);
+    const sf::Vector2f graphicPosition = metersToPixels(bodyPos);
 
     // Set the position of the Graphic object
     setPosition(graphicPosition);
 
-    float angle = m_body->GetAngle();
+    const float angle = m_body->GetAngle();
     setRotation(radToDeg(angle));
 
 }

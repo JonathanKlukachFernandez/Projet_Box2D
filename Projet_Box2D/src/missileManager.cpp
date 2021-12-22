@@ -1,5 +1,7 @@
 #include "missileManager.h"
 
+#include "soundManager.h"
+
 MissileManager::MissileManager(b2World& world_) : m_world(world_)
 {
 }
@@ -13,7 +15,7 @@ void MissileManager::draw(sf::RenderTarget& target, sf::RenderStates states) con
 
 void MissileManager::update()
 {
-	auto m = std::remove_if(
+	const auto m = std::remove_if(
 		m_missiles.begin(),
 		m_missiles.end(),
 		[](Missile& m) {return m.getIsDead(); });
@@ -25,12 +27,9 @@ void MissileManager::update()
 	}
 }
 
-void MissileManager::AddMissile(Ship& ship_)
+void MissileManager::AddMissile(sf::Vector2f startPos, float angle)
 {
-
-	sf::Vector2f startPos = ship_.getPosition();
-	float angle = ship_.getRotation();
-
+	SoundManager::Instance()->playMissile();
 	m_missiles.emplace_back(
 		Missile(
 			m_world,
@@ -42,7 +41,7 @@ void MissileManager::AddMissile(Ship& ship_)
 void MissileManager::putMissileToDeath(int idMissile_)
 {
 	// Check id, then put isDead to true
-	auto m = std::find_if(
+	const auto m = std::find_if(
 		m_missiles.begin(),
 		m_missiles.end(),
 		[idMissile_](Missile& m) {return m.getLocalId() == idMissile_; }

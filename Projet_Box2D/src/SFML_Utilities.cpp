@@ -10,8 +10,7 @@ float determinant(sf::Vector2f vec1_, sf::Vector2f vec2_) {
 }
 
 sf::Vector2f normalize(const sf::Vector2f& vec) {
-
-    float fMagnitude = vecLength(vec);
+	const float fMagnitude = vecLength(vec);
 
     if (fMagnitude > 0) {
         return sf::Vector2f(vec.x / fMagnitude, vec.y / fMagnitude);

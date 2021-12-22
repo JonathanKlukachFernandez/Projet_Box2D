@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "userData.h"
@@ -10,6 +9,10 @@ class Game;
 class EnemyShip : public sf::Drawable, public sf::Transformable {
 
 public:
+
+	void shoot();
+
+	void UpdateTimer(sf::Time time);
 
 	explicit EnemyShip(Game& game_);
 	~EnemyShip() {}
@@ -36,6 +39,8 @@ public:
 	constexpr float enemyLifeMax() { return 100.0f; };
 
 private:
+	bool m_isGoingRight;
+
 	Game& m_game;
 
 	sf::Sprite m_sprite;
@@ -44,5 +49,8 @@ private:
 	UserData* m_userData = new UserData(UserDataType::ENEMYSHIP);
 
 	float m_enemyLife = 100.0f;
+
+	float time_between_shots = 5.0f;
+	float timer = 5.0f;
 
 };

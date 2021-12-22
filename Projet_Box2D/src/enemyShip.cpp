@@ -20,7 +20,28 @@ void EnemyShip::setDamages(float damages_)
 }
 
 
+/*
+ bool isGoingRight = false;
+
+void update() {
+    if (isGoingRight) {
+        position.x += 1;
+    } else {
+        position.x -= 1;
+    }
+    
+    if (position.x < 0 || position.x > LIMITE_ECRAN) {
+        isGoingRight = !isGoingRight;
+    }
+}
+ */
+
+
+
+
 void EnemyShip::init(sf::Vector2u winsize) {
+
+   
 
     // Defining the shape
     TextureManager* texManager = TextureManager::Instance();
@@ -31,7 +52,7 @@ void EnemyShip::init(sf::Vector2u winsize) {
     b2BodyDef bodyDef;
     bodyDef.fixedRotation = true;
     bodyDef.type = b2_dynamicBody;
-    b2Vec2 windowSize = pixelsToMeters(winsize);
+    const b2Vec2 windowSize = pixelsToMeters(winsize);
     bodyDef.position.Set(windowSize.x / 2.0f, windowSize.y / 4.0f);
     bodyDef.angularDamping = 0.75f;
     bodyDef.linearDamping = 0.75f;
@@ -58,6 +79,7 @@ void EnemyShip::init(sf::Vector2u winsize) {
     playerFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&m_userData);
     m_body->CreateFixture(&playerFixtureDef);
 
+
 }
 
 void EnemyShip::update() {
@@ -66,17 +88,46 @@ void EnemyShip::update() {
     //body->SetLinearVelocity(linVelocity);
 
     // Get the position of the body
-    b2Vec2 bodyPos = m_body->GetPosition();
+    const b2Vec2 bodyPos = m_body->GetPosition();
 
     // Translate meters to pixels
-    sf::Vector2f graphicPosition = metersToPixels(bodyPos);
+    const sf::Vector2f graphicPosition = metersToPixels(bodyPos);
 
     // Set the position of the Graphic object
     setPosition(graphicPosition);
 
-    float angle = m_body->GetAngle();
+    const float angle = m_body->GetAngle();
     setRotation(radToDeg(-1.0f * angle));
 
+    if (m_isGoingRight) {
+        //position.x += 1;
+        m_body->SetLinearVelocity(b2Vec2(1, 0));
+    }
+    else {
+        m_body->SetLinearVelocity(b2Vec2(-1, 0));
+    }
+
+    if (getPosition().x <= 40 ) {
+        m_isGoingRight = true;
+    }
+    else if(getPosition().x > 680)
+    {
+        m_isGoingRight = false;
+    }
+        
+        
+
+}
+
+void EnemyShip::UpdateTimer(sf::Time time)
+{
+    timer -= time.asSeconds();
+
+    if (timer <= 0)
+    {
+        //FAIRE QUELQUE CHOSE
+        timer = time_between_shots;
+    }
 }
 
 void EnemyShip::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -86,8 +137,7 @@ void EnemyShip::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 void EnemyShip::move(sf::Vector2f _pixelsPosition, sf::Vector2f _velocity) {
-
-    b2Vec2 pos = pixelsToMeters(_pixelsPosition);
+	const b2Vec2 pos = pixelsToMeters(_pixelsPosition);
     b2Vec2 vel = pixelsToMeters(_velocity);
 
     m_body->SetTransform(pos, 0.0f);

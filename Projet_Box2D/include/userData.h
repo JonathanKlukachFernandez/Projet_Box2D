@@ -2,14 +2,14 @@
 
 #include <string>
 
-enum UserDataType : char
+enum class UserDataType : char
 {
+    NONE,
     SHIP = 's',
     LIMIT = 'l',
     ASTEROID = 'a',
     MISSILE = 'n',
     ENEMYSHIP = 'e',
-    NONE
 
 };
 

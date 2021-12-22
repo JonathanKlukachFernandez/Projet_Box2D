@@ -64,15 +64,15 @@ void Ship::update() {
     //body->SetLinearVelocity(linVelocity);
 
     // Get the position of the body
-    b2Vec2 bodyPos = m_body->GetPosition();
+    const b2Vec2 bodyPos = m_body->GetPosition();
 
     // Translate meters to pixels
-    sf::Vector2f graphicPosition = metersToPixels(bodyPos);
+    const sf::Vector2f graphicPosition = metersToPixels(bodyPos);
 
     // Set the position of the Graphic object
     setPosition(graphicPosition);
 
-    float angle = m_body->GetAngle();
+    const float angle = m_body->GetAngle();
     setRotation(radToDeg(angle));
 
 }
@@ -84,8 +84,7 @@ void Ship::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 void Ship::move(sf::Vector2f _pixelsPosition, sf::Vector2f _velocity) {
-
-    b2Vec2 pos = pixelsToMeters(_pixelsPosition);
+	const b2Vec2 pos = pixelsToMeters(_pixelsPosition);
     b2Vec2 vel = pixelsToMeters(_velocity);
 
     m_body->SetTransform(pos, 0.0f);
@@ -93,9 +92,8 @@ void Ship::move(sf::Vector2f _pixelsPosition, sf::Vector2f _velocity) {
 }
 
 void Ship::ApplyLocalForceWithCheck(float forceValue) {
-
-    b2Vec2 force(0.0, forceValue);
-    b2Vec2 localForce = m_body->GetLocalVector(force);
+	const b2Vec2 force(0.0, forceValue);
+	const b2Vec2 localForce = m_body->GetLocalVector(force);
 
     if (b2Abs(m_body->GetLinearVelocity().Length()) < 5.0f) {
         m_body->ApplyForceToCenter(localForce, true);
