@@ -38,6 +38,10 @@ void Game::init() {
 	m_gameOverTitle.setOrigin(0.5f * texture_manager->getGameOverTexture().getSize().x, 0.5f * texture_manager->getGameOverTexture().getSize().y);
 	m_gameOverTitle.setPosition(0.5f * m_window.getSize().x, 0.5f * m_window.getSize().y);
 
+	m_youWinTitle.setTexture(texture_manager->getGameOverTexture());
+	m_youWinTitle.setOrigin(0.5f * texture_manager->getGameOverTexture().getSize().x, 0.5f * texture_manager->getGameOverTexture().getSize().y);
+	m_youWinTitle.setPosition(0.5f * m_window.getSize().x, 0.5f * m_window.getSize().y);
+
 	// Add a bouncer
 	// LEFT LIMIT -------------------------------------------
 	m_windowLimits.push_back(
@@ -116,7 +120,6 @@ void Game::loop()
 			m_ship.speedRight(1.0f);
 		}
 
-
 #pragma endregion
 
 
@@ -142,7 +145,7 @@ void Game::update()
 	const int32 positionIterations = 2;
 	m_world.Step(timeStep, velocityIterations, positionIterations);
 
-	// Tick every 1.0sec
+	// Tick every 1.0sec & enemy missile start position
 	const sf::Time elapsed = clock.restart();
 	collectedElapsed += elapsed;
 	m_shootTimer -= elapsed.asSeconds();
@@ -164,7 +167,7 @@ void Game::update()
 	{
 		// Game over
 		m_gameOver = true;
-		return;
+		EXIT_SUCCESS;
 	}
 
 
@@ -173,9 +176,9 @@ void Game::update()
 	m_enemyLifeBar.update();
 	if (m_enemyShip.getEnemyLife() <= 0)
 	{
-		// You win !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		m_gameOver = true;
-		return;
+		// You win 
+		m_youWin = true;
+		EXIT_SUCCESS;
 	}
 
 
@@ -209,11 +212,11 @@ void Game::draw()
 
 	// DRWA THINGS ----------------------------------------------------------
 	// Draw the ship
-	if (!m_gameOver)
+	if (!m_gameOver||!m_youWin)
 		m_window.draw(m_ship);
 
 	// Draw the enemy ship
-	if (!m_gameOver)
+	if (!m_gameOver || !m_youWin)
 		m_window.draw(m_enemyShip);
 
 	// Draw stuff
@@ -226,12 +229,19 @@ void Game::draw()
 			m_window.draw(b);
 		}
 	}
-	// Draw the Life bars
+	// Draw the life bars
 	m_window.draw(m_lifeBar);
 	m_window.draw(m_enemyLifeBar);
 
 	if (m_gameOver)
+	{
 		m_window.draw(m_gameOverTitle);
+	}
+
+	if (m_youWin)
+	{
+		m_window.draw(m_youWinTitle);
+	}
 
 	// Display all elements
 	m_window.display();

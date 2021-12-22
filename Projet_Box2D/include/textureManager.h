@@ -24,9 +24,11 @@ protected:
     static TextureManager* textureManager_;
 
     sf::Texture m_shipTexture;
+    sf::Texture m_youWinTexture;
     sf::Texture m_gameOverTexture;
     sf::Texture m_missileTexture;
     sf::Texture m_enemyShipTexture;
+    
 
 public:
 
@@ -51,6 +53,7 @@ public:
     // --------------------
     sf::Texture& getShipTexture();
     sf::Texture& getGameOverTexture();
+    sf::Texture& getYouWinTexture();
     sf::Texture& getMissileTexture();
     sf::Texture& getEnemyShipTexture();
 

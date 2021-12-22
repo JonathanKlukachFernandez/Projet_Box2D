@@ -33,7 +33,7 @@ public:
 	void setDamagesToShip(float damages_);
 	void setDamagesToEnemyShip(float damages_);
 	void putMissileToDeath(int idMissile_);
-	//void putEnemyShipToDeath(int idEnemyShip_);
+	void putEnemyShipToDeath(int idEnemyShip_);
 
 
 private:
@@ -43,6 +43,7 @@ private:
 
 	bool m_debugMode;
 	bool m_gameOver = false;
+	bool m_youWin = false;
 
 	// The window ---------------------------------------------
 	sf::RenderWindow m_window;
@@ -63,6 +64,7 @@ private:
 	LifeBar m_lifeBar = LifeBar(100.0f);
 	EnemyLifeBar m_enemyLifeBar = EnemyLifeBar(100.0f);
 	sf::Sprite m_gameOverTitle;
+	sf::Sprite m_youWinTitle;
 
 	sf::Clock clock;
 	sf::Time collectedElapsed;
