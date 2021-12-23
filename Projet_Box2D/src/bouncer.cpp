@@ -3,7 +3,7 @@
 
 #include "bouncer.h"
 #include "game.h"
-#include "SFML_Utilities.h"
+#include "sfmlUtilities.h"
 
 Bouncer::Bouncer(Game& game_, sf::Vector2f pos_ ,sf::Vector2f size_) : game(game_)
 {

@@ -1,12 +1,7 @@
-
 #include "game.h"
 #include "ship.h"
-
-#include "SFML_Utilities.h"
-#include <iostream>
-
+#include "sfmlUtilities.h"
 #include "textureManager.h"
-#include "userData.h"
 
 Ship::Ship(Game& game_) : m_game(game_)
 {
@@ -20,7 +15,6 @@ void Ship::setDamages(float damages_)
 {
     m_life -= damages_;
 }
-
 
 void Ship::init(sf::Vector2u winsize) {
 
@@ -55,8 +49,7 @@ void Ship::init(sf::Vector2u winsize) {
     playerFixtureDef.restitution = 0.6f; // Make it bounce a little bit
     //playerFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&m_userData);
 	m_body->CreateFixture(&playerFixtureDef);
-
-}
+    }
 
 void Ship::update() {
 

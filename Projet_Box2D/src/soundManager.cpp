@@ -1,16 +1,25 @@
 #include "soundManager.h"
+#include <SFML/Audio.hpp>
 
 SoundManager* SoundManager::SoundManager_ = nullptr;
 
 SoundManager::SoundManager()
 {
-    if (!soundFxMissile.loadFromFile("data/sounds/Missile.wav"))
+    if (!soundFxMissile.loadFromFile("data/sounds/missile.wav"))
     {
-        std::cerr << "Error loading : " << "data/sounds/Missile.wav" << std::endl;
+        std::cerr << "Error loading : " << "data/sounds/missile.wav" << std::endl;
     }
     missile.setBuffer(soundFxMissile);
 
     missile.setVolume(10);
+
+
+    /*
+        sf::Music music;
+    if (!music.openFromFile("data/sounds/turboKiller.wav"))
+        return;
+    music.play();
+    */
 
 }
 
@@ -64,3 +73,5 @@ void SoundManager::playOnce(sf::SoundBuffer& soundFx_)
     sounds.back().play();
 
 }
+
+

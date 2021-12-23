@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 
-#include "SFML_Utilities.h"
+#include "sfmlUtilities.h"
 #include "textureManager.h"
 #include "userData.h"
 

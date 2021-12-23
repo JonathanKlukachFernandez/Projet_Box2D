@@ -4,7 +4,7 @@
 #include <box2d/b2_world.h>
 #include <SFML/Graphics/Drawable.hpp>
 
-#include "SFML_Utilities.h"
+#include "sfmlUtilities.h"
 
 #include "missile.h"
 #include "ship.h"

@@ -1,7 +1,7 @@
 #include "game.h"
 #include "enemyShip.h"
 
-#include "SFML_Utilities.h"
+#include "sfmlUtilities.h"
 #include <iostream>
 
 #include "textureManager.h"

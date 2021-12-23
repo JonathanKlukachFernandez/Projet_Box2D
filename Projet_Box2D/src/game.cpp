@@ -1,9 +1,6 @@
-#include <random>
-
-#include "game.h"
-
 #include <iostream>
-
+#include <random>
+#include "game.h"
 #include "textureManager.h"
 
 Game::Game() :
@@ -16,9 +13,11 @@ Game::Game() :
 	m_missileManager(m_world),
 	m_shootTimer(Game::TIME_TO_SHOOT)
 {
+	
 }
 
-void Game::init() {
+void Game::init()
+{
 
 	m_world.SetContactListener(&m_contact_listener_);
 
@@ -64,13 +63,10 @@ void Game::init() {
 
 	// Register contacts
 	m_world.SetContactListener(&m_contacts);
-
 }
 
 void Game::loop()
 {
-
-
 	while (m_window.isOpen())
 	{
 #pragma region Event processes
@@ -125,7 +121,14 @@ void Game::loop()
 
 #pragma region Physical process
 		if (!m_gameOver)
+		{
 			update();
+		}
+
+		if (!m_youWin)
+		{
+			update();
+	    }
 
 #pragma endregion
 		draw();
@@ -145,7 +148,7 @@ void Game::update()
 	const int32 positionIterations = 2;
 	m_world.Step(timeStep, velocityIterations, positionIterations);
 
-	// Tick every 1.0sec & enemy missile start position
+	// Shoot every 1.0sec & enemy missile start position
 	const sf::Time elapsed = clock.restart();
 	collectedElapsed += elapsed;
 	m_shootTimer -= elapsed.asSeconds();
@@ -170,27 +173,25 @@ void Game::update()
 		EXIT_SUCCESS;
 	}
 
-
-	// Update Life bar with the life of the enemy ship
+		// Update Life bar with the life of the enemy ship
 	m_enemyLifeBar.setEnemyLife(m_enemyShip.getEnemyLife());
 	m_enemyLifeBar.update();
 	if (m_enemyShip.getEnemyLife() <= 0)
 	{
 		// You win 
 		m_youWin = true;
+		
 		EXIT_SUCCESS;
 	}
 
-
-	// Udpate stuff
+		// Udpate stuff
 	m_missileManager.update();
 	// Update limits
 	for (auto& b : m_windowLimits) {
 		b.update();
 	}
 
-
-	if (collectedElapsed.asSeconds() > 1.0f) {
+		if (collectedElapsed.asSeconds() > 1.0f) {
 
 		std::random_device rd; // obtain a random number from hardware
 		std::mt19937 generator(rd()); // seed the generator

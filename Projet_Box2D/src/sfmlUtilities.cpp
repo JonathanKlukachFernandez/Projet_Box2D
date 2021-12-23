@@ -1,4 +1,4 @@
-#include "SFML_Utilities.h"
+#include "sfmlUtilities.h"
 #include <box2d/b2_math.h>
 
 float dotProduct(sf::Vector2f vec1_, sf::Vector2f vec2_) {

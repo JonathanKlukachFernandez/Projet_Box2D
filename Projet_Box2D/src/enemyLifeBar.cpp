@@ -4,13 +4,13 @@ EnemyLifeBar::EnemyLifeBar(float enemylifeMax)
 {
 
 	// Life bar of the enemy ship
-	m_enemyLifeBarFill.setSize(sf::Vector2f(200.0f, 5.0f));
+	m_enemyLifeBarFill.setSize(sf::Vector2f(400.0f, 5.0f));
 	m_enemyLifeBarFill.setPosition(sf::Vector2f(10, 40));
 	m_enemyLifeBarFill.setOrigin(0, m_enemyLifeBarFill.getSize().y * 0.5f);
 	m_enemyLifeBarFill.setFillColor(sf::Color::Red);
 
 	// Life bar of the enemy ship
-	m_enemyLifeBarContour.setSize(sf::Vector2f(200.0f, 5.0f));
+	m_enemyLifeBarContour.setSize(sf::Vector2f(400.0f, 5.0f));
 	m_enemyLifeBarContour.setPosition(sf::Vector2f(10, 40));
 	m_enemyLifeBarContour.setOrigin(0, m_enemyLifeBarContour.getSize().y * 0.5f);
 	m_enemyLifeBarContour.setFillColor(sf::Color::Black);
