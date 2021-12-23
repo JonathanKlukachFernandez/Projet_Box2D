@@ -13,7 +13,11 @@ Game::Game() :
 	m_missileManager(m_world),
 	m_shootTimer(Game::TIME_TO_SHOOT)
 {
-	
+	if(!mainTheme.openFromFile("data/sounds/turboKiller.wav"))
+	{
+		std::cout << "OOPS";
+	}
+	mainTheme.play();
 }
 
 void Game::init()
@@ -37,8 +41,8 @@ void Game::init()
 	m_gameOverTitle.setOrigin(0.5f * texture_manager->getGameOverTexture().getSize().x, 0.5f * texture_manager->getGameOverTexture().getSize().y);
 	m_gameOverTitle.setPosition(0.5f * m_window.getSize().x, 0.5f * m_window.getSize().y);
 
-	m_youWinTitle.setTexture(texture_manager->getGameOverTexture());
-	m_youWinTitle.setOrigin(0.5f * texture_manager->getGameOverTexture().getSize().x, 0.5f * texture_manager->getGameOverTexture().getSize().y);
+	m_youWinTitle.setTexture(texture_manager->getYouWinTexture());
+	m_youWinTitle.setOrigin(0.5f * texture_manager->getYouWinTexture().getSize().x, 0.5f * texture_manager->getYouWinTexture().getSize().y);
 	m_youWinTitle.setPosition(0.5f * m_window.getSize().x, 0.5f * m_window.getSize().y);
 
 	// Add a bouncer
@@ -120,15 +124,20 @@ void Game::loop()
 
 
 #pragma region Physical process
-		if (!m_gameOver)
+		if (!m_gameOver && !m_youWin)
 		{
 			update();
 		}
 
-		if (!m_youWin)
+		else
+		{
+			mainTheme.stop();
+		}
+		
+		/*if (!m_youWin)
 		{
 			update();
-	    }
+	    }*/
 
 #pragma endregion
 		draw();
@@ -166,9 +175,12 @@ void Game::update()
 	// Update Life bar with the life of the ship
 	m_lifeBar.setLife(m_ship.getLife());
 	m_lifeBar.update();
+
 	if(m_ship.getLife() <= 0)
 	{
 		// Game over
+
+		std::cout << "I lost";
 		m_gameOver = true;
 		EXIT_SUCCESS;
 	}
@@ -178,7 +190,8 @@ void Game::update()
 	m_enemyLifeBar.update();
 	if (m_enemyShip.getEnemyLife() <= 0)
 	{
-		// You win 
+		// You win
+		
 		m_youWin = true;
 		
 		EXIT_SUCCESS;
@@ -213,7 +226,7 @@ void Game::draw()
 
 	// DRWA THINGS ----------------------------------------------------------
 	// Draw the ship
-	if (!m_gameOver||!m_youWin)
+	if (!m_gameOver || !m_youWin)
 		m_window.draw(m_ship);
 
 	// Draw the enemy ship
@@ -239,7 +252,7 @@ void Game::draw()
 		m_window.draw(m_gameOverTitle);
 	}
 
-	if (m_youWin)
+	else if (m_youWin)
 	{
 		m_window.draw(m_youWinTitle);
 	}

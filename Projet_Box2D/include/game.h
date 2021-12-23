@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <SFML/Audio/Music.hpp>
 
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "box2d/b2_world.h"
@@ -20,6 +21,9 @@
 class Game {
 
 public:
+
+	sf::Music mainTheme;
+
 	static constexpr float TIME_TO_SHOOT = 1.5f;
 
 	Game();
